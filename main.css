@@ -1,0 +1,51 @@
+#panel {
+    margin: 5px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px;
+    text-align: left;
+    padding: 10px;
+    background-color: white;
+    font-size: 10px;
+    font-family: inherit;
+    width: 50%;
+    height: 50%;
+    border: 1px solid black;
+}
+
+.aligned {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.over {
+    grid-column: 1 / span 2;
+}
+
+button {
+    border-radius: 5px;
+}
+
+button > a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button#signup {
+    background-color: #4CAF50;
+    color: white;
+}
+
+button#signup:hover {
+    background-color: #45a049;
+}
+
+button#cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+button#cancel:hover {
+    background-color: #e53935;
+}
