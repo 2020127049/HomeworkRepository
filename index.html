@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025-1학기 인터넷프로그래밍 과제 1</title>
     <style>
+        html, body {
+            width: 1020px;
+            margin: 0 auto;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
@@ -24,11 +33,21 @@
     </style>
 </head>
 <body>
+    <div>
+        <a href="/login.html">로그인</a>
+    </div>
+    <div>
+        <a href="/signup.html">회원가입</a>
+    </div>
     <h1>안녕하세요. 이번 학기에 인터넷프로그래밍을 수강하는 2020127049 이진명입니다.</h1>
     <ul>
         <li>저는 왓챠피디아에서 <a href="https://pedia.watcha.com/ko-KR/users/a9L5P0kYQL5wg">제 본명으로</a> 활동하며 영화 평을 종종 남기고 있습니다.</li>
         <li>영화를 볼 때는 OTT보다는 주로 <a href="https://play.google.com/store/movies">구글 플레이 영화</a> 같은 곳에서 사서 보는 편입니다.</li>
     </ul>
+    <div>
+        <input type="text" placeholder="키워드를 입력하세요.">
+        <button type="button" onclick="filterResults">Filter Results</button>
+    </div>
     <table>
         <caption>표1. Top3 영화</caption>
         <tr>
@@ -40,24 +59,68 @@
             <th>포스터</th>
             <th>명대사</th>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>Jumanji</td>
-            <td><img src="./JMJ.png" alt="The poster of Jumanji" width="117" height="176"></td>
-            <td>Roll the dice and unleash the excitement!</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Grumpier Old Men</td>
-            <td><img src="./GOM.png" alt="The poster of Grumpier Old Men" width="117" height="176"></td>
-            <td>Still Yelling. Still Fighting. Still Ready for Love.</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Waiting to Exhale</td>
-            <td><img src="./WTE.png" alt="The poster of Waiting to Exhale" width="117" height="176"></td>
-            <td>Friends are the people who let you be yourself... and never let you forget it.</td>
-        </tr>
     </table>
+    <script>
+        let products = [];
+        // fetch product.json
+        async function fetchProducts() {
+            try {
+                const response = await fetch('product.json');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const products = await response.json();
+                return products;
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+        // create table rows from products
+        function createTableRows(products) {
+            const table = document.querySelector('table');
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.rank}</td>
+                    <td>${product.title}</td>
+                    <td><img src="${product.poster}" alt="${product.title} poster" width="117" height="176"></td>
+                    <td>${product.quote}</td>
+                `;
+                table.appendChild(row);
+            });
+        }
+        // add event listener to filter button
+        document.querySelector('button').addEventListener('click', filterResults);
+        // add event listener to input field
+        document.querySelector('input[type="text"]').addEventListener('input', filterResults);
+        // create table rows when products are fetched
+        fetchProducts().then(fetchedProducts => {
+            products = fetchedProducts;
+            createTableRows(products);
+        });
+        // filter results based on input
+        function filterResults() {
+            const keyword = document.querySelector('input[type="text"]').value.toLowerCase();
+            const rows = document.querySelectorAll('table tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 0) {
+                    const title = cells[1].textContent.toLowerCase();
+                    if (title.includes(keyword)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        }
+        // Initialize the page with products
+        document.addEventListener('DOMContentLoaded', async () => {
+            const products = await fetchProducts();
+            if (products) {
+                console.log(products);
+            }
+        });
+    </script>
 </body>
 </html>

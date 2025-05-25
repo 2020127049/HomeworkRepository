@@ -1,0 +1,20 @@
+[
+    {
+        "rank": 1,
+        "title": "Jumanji",
+        "poster": "./JMJ.png",
+        "quote": "Roll the dice and unleash the excitement!"
+    },
+    {
+        "rank": 2,
+        "title": "Grumpier",
+        "poster": "./GOM.png",
+        "quote": "Still Yelling. Still Fighting. Still Ready for Love."
+    },
+    {
+        "rank": 3,
+        "title": "Waiting to Exhale",
+        "poster": "./WTE.png",
+        "quote": "Friends are the people who let you be yourself... and never let you forget it."
+    }
+]
